@@ -1,7 +1,7 @@
 // EditCar.tsx
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, KeyboardEvent } from "react";
 import { Car, CarResponse, CarEntity } from "../types";
-import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { Dialog, DialogActions, DialogTitle, Button } from "@mui/material";
 import CarDialogContent from "./CarDialogContent";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateCar } from "../api/carapi";
@@ -63,6 +63,17 @@ function EditCar({cardata}: FormProps) {
     setOpen(false);
   }
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    // 'Enter' 키를 눌렀을 때만 실행
+    if (event.key === 'Enter') {
+      // Enter 키를 눌렀을 때 실행할 동작 정의
+      event.preventDefault();
+      handleSave();
+      // 입력 필드를 초기화하려면 아래 주석을 해제하세요.
+      // setInputValue('');
+    }
+  };
+
   // AddCar.tsx에서 그대로 복사해왔습니다.
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setCar({...car, [event.target.name]: event.target.value});
@@ -70,15 +81,17 @@ function EditCar({cardata}: FormProps) {
 
   return(
     <>
-      <button onClick={handleClickOpen}>
-        Edit
-      </button>
+      <Button onClick={handleClickOpen}>
+        EDIT
+      </Button>
       <Dialog open={open} onClose={handleClickClose}>
         <DialogTitle>Edit Car</DialogTitle>
-        <CarDialogContent car={car} handleChange={handleChange} />
+        <div onKeyDown={handleKeyDown}>
+          <CarDialogContent car={car} handleChange={handleChange} />
+        </div>
         <DialogActions>
-          <button onClick={handleClickClose}>Cancel | 취소</button>
-          <button onClick={handleSave}>Save | 저장</button>
+          <Button onClick={handleClickClose}>Cancel | 취소</Button>
+          <Button onClick={handleSave}>Save | 저장</Button>
         </DialogActions>  
       </Dialog>  
     </>
