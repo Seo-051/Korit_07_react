@@ -2,8 +2,9 @@ import { Container } from '@mui/material'
 import {AppBar, Toolbar, Typography} from '@mui/material'
 import {List, ListItem, ListItemText } from '@mui/material';
 import './App.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddItem from './AddItem';
+import { getItems } from './api/itemapi';
 
 export type Item = {
   product: string;
@@ -15,6 +16,22 @@ function App() {
   const addItem = (item:Item) => {
     setItems([item, ...items]);
   }
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const items = await getItems();  
+      console.log("서버에서 받은 데이터:", items);
+      setItems(items);                 
+    } catch (error) {
+      console.error("아이템을 불러오는데 실패했습니다:", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
 
   return (
     <Container>
