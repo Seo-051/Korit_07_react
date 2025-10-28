@@ -1,7 +1,7 @@
-import { AccountCredentials, ShoppingItem, ShoppingItemEntity } from './../../types';
+import { AccountCredentials, ShoppingItem, ShoppingItemEntity } from '../type';
 import axios, { AxiosRequestConfig } from 'axios';
 
-const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -30,7 +30,7 @@ const getRequestConfig = () : AxiosRequestConfig => {
 }
 
 // 기존 API 관련 함수들 정의
-export const login = async (creds : AccountCredentials): Promise<String> => {
+export const login = async (creds : AccountCredentials): Promise<string> => {
   try {
     const response = await apiClient.post('/login', creds);
     const jwtToken = response.headers.authorization;
@@ -53,23 +53,23 @@ export const login = async (creds : AccountCredentials): Promise<String> => {
 };
 
 export const getItems = async () : Promise<ShoppingItem[]> => {
-  const response = await apiClient.get('/api/items', getRequestConfig());
+  const response = await apiClient.get('/api/shoppingItems', getRequestConfig());
   return response.data;
 }
 
 export const addItem = async (item: ShoppingItemEntity): Promise<ShoppingItem> => {
-  const response = await apiClient.post('/api/items', item, getRequestConfig());
+  const response = await apiClient.post('/api/shoppingItems', item, getRequestConfig());
   return response.data;
 }
 
 export const updateItem = async (id: number, itemUpdate: ShoppingItemEntity): 
 Promise<ShoppingItem> => {
-  const response = await apiClient.put(`/api/items/${id}`, itemUpdate, getRequestConfig());
+  const response = await apiClient.put(`/api/shoppingItems/${id}`, itemUpdate, getRequestConfig());
   return response.data;
 }
 
 export const deleteItem = async (id: number) : Promise<void> => {
-  await apiClient.delete(`/api/items/${id}`, getRequestConfig());
+  await apiClient.delete(`/api/shoppingItems/${id}`, getRequestConfig());
 }
 
 

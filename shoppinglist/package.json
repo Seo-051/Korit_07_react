@@ -13,8 +13,12 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.8",
+    "@react-oauth/google": "^0.12.2",
+    "ag-grid-community": "^34.3.0",
+    "ag-grid-react": "^34.3.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
